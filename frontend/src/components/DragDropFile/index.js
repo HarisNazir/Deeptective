@@ -1,12 +1,8 @@
 import React from "react";
-import "./index.css";
 import axios from "axios";
 
-// drag drop file component
 function DragDropFile() {
-  // drag state
   const [dragActive, setDragActive] = React.useState(false);
-  // ref
   const inputRef = React.useRef(null);
 
   // handle drag events
@@ -27,7 +23,9 @@ function DragDropFile() {
     setDragActive(false);
     console.log("HANDLE DROP")
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      // handleFiles(e.dataTransfer.files);
+      const file = e.dataTransfer.files[0];
+      // send file to Django view
+      handleUpload(file);
     }
   };
 
@@ -35,13 +33,25 @@ function DragDropFile() {
   const handleChange = function (e) {
     e.preventDefault();
     if (e.target.files && e.target.files[0]) {
-      // handleFiles(e.target.files);
+      const file = e.target.files[0];
+      // send file to Django view
+      handleUpload(file);
     }
   };
 
   // triggers the input when the button is clicked
   const onButtonClick = () => {
     inputRef.current.click();
+  };
+
+  // sends file to Django view using Axios
+  const handleUpload = (file) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    axios
+      .post("http://127.0.0.1:8000/api/upload_video/", formData)
+      .then((res) => console.log(res.data))
+      .catch((err) => console.log(err));
   };
 
   return (
