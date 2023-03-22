@@ -13,7 +13,7 @@
 <div class="container">
   <div class="logo text-center mb-3"><img src="{% static 'images/logo1.png'%}" alt="Logo" ></div>
   <hr />
-
+{% comment %} 
   <h3>Frames Split</h3>
   <div id="preprocessed_images" class="col-12 mt-4 mb-2">
     {% for each_image in preprocessed_images %}
@@ -27,7 +27,7 @@
     {% for each_image in faces_cropped_images %}
     <img src="{%static each_image%}" class="faces" width=auto height="150" />
     {%endfor%}
-  </div>
+  </div> {% endcomment %}
 
   <div class="result text-center">
     <h3>Play to see Result</h3>
@@ -41,16 +41,18 @@
       <h4 class="mx-auto">Result: <span style="color:red">{{output}}</span>
         <img src="{% static 'images/thumpdown.png'%}" alt="fake" height="100px" width=auto >
       {%endif%}
+
+      <button id="videoUpload" type="submit" name="submit" class="btn btn-success mt-3 btn-block"><a href="{%url 'ml_app:home'%}" style="color: white">Try Another Video</a></button>
   </div>
-<!--
-  <h3>Heat Maps</h3>
+
+  {% comment %} <h3>Heat Maps</h3>
   <div id="heatmap_images" class="col-12 mb-4 ">
     {% for each_heatmap_image in heatmap_images %}
     <img src="{%static each_heatmap_image%}" class="heat-map" width="100" height="150" />
     {%endfor%}
   </div>
-</div>
--->
+</div> {% endcomment %}
+
 {%endif%}
 {%endblock%}
 {%block js_cripts%}
